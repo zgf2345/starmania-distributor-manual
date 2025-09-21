@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrameFlash分销商操作手册</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --accent-color: #0ea5e9;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-accent: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+        
+        .version {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            opacity: 0.8;
+        }
+        
+        /* Navigation Styles */
+        .toc {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .toc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .toc h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .toc li {
+            margin: 0;
+        }
+        
+        .toc a {
+            display: block;
+            padding: 16px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            background: var(--bg-accent);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .toc a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+        
+        /* Section Styles */
+        section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-left: 0;
+            border: none;
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 1px;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 28px 0 16px;
+            position: relative;
+            padding-left: 16px;
+        }
+        
+        h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 18px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--primary-color);
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            text-align: left;
+            font-size: 0.875rem;
+            letter-spacing: 0.025em;
+        }
+        
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+        
+        tr:hover {
+            background: var(--bg-accent);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Card Components */
+        .highlight {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            position: relative;
+        }
+        
+        .highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+        
+        .steps {
+            background: var(--bg-accent);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 1px solid var(--border-light);
+        }
+        
+        .step {
+            margin-bottom: 12px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+            position: relative;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        .step:hover {
+            transform: translateX(2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .step:before {
+            content: "→";
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .tip {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .tip::before {
+            content: '💡';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.2rem;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .warning::before {
+            content: '⚠️';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.2rem;
+        }
+        
+        .danger {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .formula {
+            background: var(--bg-accent);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .insight {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .creative-tip {
+            background: #faf5ff;
+            border: 1px solid #8b5cf6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .technique {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-light);
+        }
+        
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 12px 0;
+            display: inline-block;
+            width: calc(50% - 10px);
+            margin-right: 20px;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--success-color);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .metric-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 8px;
+        }
+        
+        .template-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .template-box:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .flow {
+            background: var(--bg-accent);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            font-size: 1rem;
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Button Styles */
+        .btn-print {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            margin: 24px auto;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .btn-print:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            padding: 32px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .toc ul {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 25px;
+            }
+            
+            .metric-card {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>FrameFlash分销商操作手册 <span class="version">版本号 v2.5 | 2025年9月</span></h1>
+        </header>
+        
+        <section class="toc">
+            <h2>目录</h2>
+            <ul>
+                <li><a href="#section1">一、核心权益速览表</a></li>
+                <li><a href="#section2">二、FrameFlash平台优势介绍</a></li>
+                <li><a href="#section3">三、APP下载与注册</a></li>
+                <li><a href="#section4">四、推广方式</a></li>
+                <li><a href="#section5">五、适用平台与使用方法</a></li>
+                <li><a href="#section6">六、发布流程（手机网络准备）</a></li>
+                <li><a href="#section7">七、收益提现相关</a></li>
+                <li><a href="#section8">八、父级分销商如何管理子级</a></li>
+                <li><a href="#section9">九、商务合作与分销咨询</a></li>
+                <li><a href="#section10">十、风险防控与合规指南</a></li>
+                <li><a href="#section11">十一、数据分析与优化策略</a></li>
+                <li><a href="#section12">十二、内容创作深度指导</a></li>
+            </ul>
+        </section>
+        
+        <section id="section1">
+            <h2>一、核心权益速览表</h2>
+            <p class="highlight">30秒读懂你的收益与特权</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>权益类型</th>
+                        <th>权益说明</th>
+                        <th>平台支持</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>推广收益</strong></td>
+                        <td>用户付费分佣 <strong>25%~60%</strong>（阶梯递增）</td>
+                        <td>提供正版短剧素材库+爆款文案模板</td>
+                    </tr>
+                    <tr>
+                        <td><strong>团队收益</strong></td>
+                        <td>抽佣下级收益 <strong>10%~30%</strong>（自由调控）</td>
+                        <td>自动绑定团队关系+实时收益统计看板</td>
+                    </tr>
+                    <tr>
+                        <td><strong>提现效率</strong></td>
+                        <td><strong>$50起提</strong>，次月10-25日到账</td>
+                        <td>SWIFT自动校验账户，驳回率<strong>&lt;2%</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>专属工具</strong></td>
+                        <td>生成追踪链接+多平台数据看板</td>
+                        <td>支持TikTok/Instagram/YouTube挂链效果分析</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="section2">
+            <h2>二、FrameFlash平台优势介绍</h2>
+            
+            <h3>1. 平台定位</h3>
+            <p>专注短剧推广的<strong>变现中枢</strong>，整合版权方、创作者、分销商资源，提供：</p>
+            <div class="steps">
+                <div class="step"><strong>正版授权</strong>短剧素材库（每日更新50+部）</div>
+                <div class="step"><strong>全自动分佣</strong>系统（收益T+1更新）</div>
+            </div>
+            
+            <h3>2. 六大赋能体系</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>优势</th>
+                        <th>赋能细节</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>资源丰富</strong></td>
+                        <td>覆盖言情/悬疑/逆袭等<strong>12大题材</strong>，上新速度行业第一</td>
+                    </tr>
+                    <tr>
+                        <td><strong>操作极简</strong></td>
+                        <td>接单→剪辑→发布<strong>全流程可视化引导</strong>（新手10分钟产出首条视频）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>收益倍增</strong></td>
+                        <td>首单保底$15，<strong>周收入$1000+</strong>创作者占比37%（2025年8月数据）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>教学体系</strong></td>
+                        <td>提供《短剧黄金3秒开场课》《避坑指南》等<strong>9门免费课程</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>陪跑机制</strong></td>
+                        <td>专属导师<strong>48小时内响应</strong>剪辑审核/违规预警/流量诊断</td>
+                    </tr>
+                    <tr>
+                        <td><strong>激励生态</strong></td>
+                        <td>周榜奖励+节日现金池+裂变佣金（<strong>最高叠加收益达200%</strong>）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="section3">
+            <h2>三、APP下载与注册</h2>
+            
+            <h3>1. 三步快速入驻</h3>
+            <div class="flow">
+下载APP → 填写资料 → 审核开通
+            </div>
+            
+            <h3>2. 下载方式</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>设备类型</th>
+                        <th>操作指引</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>苹果用户</td>
+                        <td>使用<strong>美区/港区Apple ID</strong>登录App Store，搜索"FrameFlash"下载</td>
+                    </tr>
+                    <tr>
+                        <td>安卓用户</td>
+                        <td>访问官网下载 → <a href="https://www.frameflash.com/share/download.html">https://www.frameflash.com/share/download.html</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>3. 注册流程</h3>
+            <div class="steps">
+                <div class="step">打开APP点击【代理商注册】</div>
+                <div class="step">填写资料：手机号（海外号优先）、邮箱、推荐码（如有）</div>
+                <div class="step">提交审核（24小时内开通权限）</div>
+            </div>
+            
+            <div class="tip">
+                <p><strong>关键提示：</strong></p>
+                <p>1. 通过您的专属链接邀请的下级分销商/用户，系统自动绑定归属关系</p>
+                <p>2. 首次登录<strong>必须绑定SWIFT银行卡</strong>（提现必备）</p>
+            </div>
+        </section>
+        
+        <section id="section4">
+            <h2>四、推广方式</h2>
+            
+            <h3>流量裂变双引擎</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>场景</th>
+                        <th>高效转化策略</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>TikTok导流</strong></td>
+                        <td>主页Bio放置<code>Linktree</code>聚合链接 → 跳转多个短剧推广页</td>
+                    </tr>
+                    <tr>
+                        <td><strong>私域沉淀</strong></td>
+                        <td>评论区引导用户点击链接 → 注册后自动推送<strong>$1新人券</strong>（转化率提升55%）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>矩阵运营</strong></td>
+                        <td>同一设备可登录<strong>3个账号</strong>（需不同IP），发布间隔≥2小时</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="section5">
+            <h2>五、适用平台与使用方法</h2>
+            
+            <h3>1. 跨平台挂链方案</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>平台</th>
+                        <th>最优挂链位置</th>
+                        <th>转化率均值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TikTok</td>
+                        <td>视频评论区+直播间购物车</td>
+                        <td>12.7%</td>
+                    </tr>
+                    <tr>
+                        <td>Instagram</td>
+                        <td>Bio链接+Stories跳转链接</td>
+                        <td>8.3%</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            
+            <h3>2. 短剧二创黄金公式</h3>
+            <div class="highlight">
+                <p><strong>爆款视频 = 热剧素材 × (冲突开场 + 悬念结尾) × 平台算法适配</strong></p>
+            </div>
+            
+            <div class="steps">
+                <div class="step"><strong>冲突开场</strong>：前3秒出现<strong>金钱/背叛/逆袭</strong>等高刺激元素</div>
+                <div class="step"><strong>算法适配</strong>：TikTok用<code>#shortdrama</code>，Instagram用<code>#drama</code></div>
+            </div>
+        </section>
+        
+        <section id="section6">
+            <h2>六、发布流程（手机网络准备）</h2>
+            
+            <h3>1. 设备标准化方案</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>项目</th>
+                        <th>合规配置</th>
+                        <th>违规风险项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>设备类型</td>
+                        <td>无SIM卡iPhone/安卓机</td>
+                        <td>插卡设备/国产ROM</td>
+                    </tr>
+                    <tr>
+                        <td>IP环境</td>
+                        <td>原生美国住宅IP（双ISP）</td>
+                        <td>机场IP/公共代理</td>
+                    </tr>
+                    <tr>
+                        <td>系统设置</td>
+                        <td>语言英语/时区EST</td>
+                        <td>中文界面/中国时区</td>
+                    </tr>
+                    <tr>
+                        <td>应用商店账号</td>
+                        <td>美区Apple ID/谷歌账户</td>
+                        <td>中国区账号</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. TikTok养号七日计划</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>天数</th>
+                        <th>核心任务</th>
+                        <th>指标要求</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Day1-3</strong></td>
+                        <td>每天刷1-3小时视频；点赞30+，关注10+；刷相关标签</td>
+                        <td>自然流量占比>80%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Day4</strong></td>
+                        <td>发布首条测试视频（15秒混剪）</td>
+                        <td>播放量>300进入下一阶段</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Day5-7</strong></td>
+                        <td>每日发布2条优化视频（带热门标签）</td>
+                        <td>单条播放>500则成功</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip">
+                <p><strong>发布时间公式：</strong></p>
+                <p>目标用户时区22:00-24:00 → 北京时间（以美国用户为例）：<strong>上午10:00-12:00</strong></p>
+            </div>
+        </section>
+        
+        <section id="section7">
+            <h2>七、收益提现相关</h2>
+            
+            <h3>1. 结算规则</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>用户类型</th>
+                        <th>分佣比例</th>
+                        <th>结算周期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>直接推广用户</td>
+                        <td>25%~45%</td>
+                        <td>T+1更新</td>
+                    </tr>
+                    <tr>
+                        <td>一级分销商</td>
+                        <td>10%~20%</td>
+                        <td>每周一更新</td>
+                    </tr>
+                    <tr>
+                        <td>二级分销商</td>
+                        <td>5%~10%</td>
+                        <td>每月5日更新</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. 提现操作</h3>
+            <div class="steps">
+                <div class="step">登录后台 → 【收益管理】</div>
+                <div class="step">输入银行卡信息（<strong>仅支持SWIFT国际账户</strong>）</div>
+                <div class="step">提交审核（系统自动校验账户有效性）</div>
+            </div>
+            
+            <div class="tip">
+                <p><strong>提现防坑指南：</strong></p>
+                <p>• <strong>驳回主因</strong>：户名拼音错误（需与银行卡一致）</p>
+                <p>• <strong>到账延迟</strong>：遇中国/美国公共假期自动顺延</p>
+                <p>• <strong>最低损耗</strong>：单笔提现≥$200可免手续费</p>
+            </div>
+        </section>
+        
+        <section id="section8">
+            <h2>八、父级分销商如何管理子级</h2>
+            
+            <h3>1. 团队裂变三级火箭</h3>
+            <div class="flow">
+您 → 一级分销商 → 二级分销商 → 推广用户
+            </div>
+            
+            <div class="steps">
+                <div class="step"><strong>收益杠杆</strong>：您可获得 一级收益×20% + 二级收益×10% + 用户收益×5%</div>
+            </div>
+            
+            <h3>2. 团队健康度监控</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>风险指标</th>
+                        <th>警戒阈值</th>
+                        <th>应对方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>下级违规率</td>
+                        <td>>15%</td>
+                        <td>暂停抽佣+强制培训</td>
+                    </tr>
+                    <tr>
+                        <td>收益衰减率</td>
+                        <td>周环比>30%</td>
+                        <td>推送热点剧集+流量扶持</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section id="section9">
+            <h2>九、商务合作与分销咨询</h2>
+            
+            <h3>1. 合作矩阵</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>资源方</th>
+                        <th>准入要求</th>
+                        <th>平台扶持</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MCN机构</td>
+                        <td>旗下≥50名创作者</td>
+                        <td>专属API接口+流量扶持</td>
+                    </tr>
+                    <tr>
+                        <td>版权方合作</td>
+                        <td>提供≥10部可授权短剧</td>
+                        <td>分佣比例最高70%</td>
+                    </tr>
+                    <tr>
+                        <td>地区代理</td>
+                        <td>预付$5000保证金</td>
+                        <td>区域独家运营权</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. 联络方式</h3>
+            <div class="steps">
+                <div class="step"><strong>官方邮箱</strong>：admin@frameflash.com（24小时响应）</div>
+                <div class="step"><strong>紧急事务</strong>：+852 1234 5678（香港办公室）</div>
+                <div class="step"><strong>入驻地址</strong>：<a href="https://cps.frameflash.com">cps.frameflash.com</a></div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>版权声明：</strong></p>
+                <p>© 2025 FrameFlash分销系统 - 版权所有</p>
+                <p>违规推广将冻结账户并追究法律责任</p>
+            </div>
+        </section>
+        
+        <section id="section10">
+            <h2>十、风险防控与合规指南</h2>
+            
+            <div class="warning">
+                <h3>🚨 核心原则：预防胜于治疗</h3>
+                <p>账号一旦被封，恢复成本极高，务必严格遵守各平台规则</p>
+            </div>
+            
+            <h3>1. TikTok违规红线</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>违规类型</th>
+                        <th>具体表现</th>
+                        <th>处罚后果</th>
+                        <th>预防措施</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>内容违规</strong></td>
+                        <td>暴力、色情、血腥画面</td>
+                        <td>视频下架→限流→封号</td>
+                        <td>使用AI审核工具预检测</td>
+                    </tr>
+                    <tr>
+                        <td><strong>版权侵权</strong></td>
+                        <td>未授权音乐、影视片段</td>
+                        <td>立即删除→账号警告</td>
+                        <td>仅使用平台提供的正版素材</td>
+                    </tr>
+                    <tr>
+                        <td><strong>刷量行为</strong></td>
+                        <td>购买粉丝、点赞、评论</td>
+                        <td>永久封号</td>
+                        <td>自然增长，拒绝任何刷量服务</td>
+                    </tr>
+                    <tr>
+                        <td><strong>频繁换IP</strong></td>
+                        <td>短时间内多地登录</td>
+                        <td>账号异常→要求验证</td>
+                        <td>固定IP地址，避免频繁切换</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. Instagram合规要点</h3>
+            <div class="steps">
+                <div class="step"><strong>Bio链接限制</strong>：每24小时最多更换3次链接</div>
+                <div class="step"><strong>Story发布频率</strong>：每小时不超过5条，避免被判定为机器人</div>
+                <div class="step"><strong>评论互动</strong>：回复率保持在60%以上，提升账号活跃度</div>
+                <div class="step"><strong>标签使用</strong>：每条帖子最多30个标签，避免标签堆砌</div>
+            </div>
+            
+            <h3>3. 版权风险规避</h3>
+            <div class="danger">
+                <h3>⚡ 版权风险等级评估</h3>
+                <p><strong>高风险</strong>：未授权影视剧片段、热门音乐</p>
+                <p><strong>中风险</strong>：二次创作内容、网络素材</p>
+                <p><strong>低风险</strong>：平台提供素材、原创内容</p>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>素材类型</th>
+                        <th>推荐来源</th>
+                        <th>使用限制</th>
+                        <th>风险等级</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>短剧片段</td>
+                        <td>FrameFlash官方素材库</td>
+                        <td>仅限推广使用</td>
+                        <td>🟢 安全</td>
+                    </tr>
+                    <tr>
+                        <td>背景音乐</td>
+                        <td>TikTok音乐库、YouTube Audio Library</td>
+                        <td>商用需标注来源</td>
+                        <td>🟢 安全</td>
+                    </tr>
+                    <tr>
+                        <td>转场特效</td>
+                        <td>剪映、CapCut内置特效</td>
+                        <td>无限制</td>
+                        <td>🟢 安全</td>
+                    </tr>
+                    <tr>
+                        <td>网络素材</td>
+                        <td>Pixabay、Unsplash</td>
+                        <td>需确认授权协议</td>
+                        <td>🟡 中等</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>4. 版权侵权应急处理</h3>
+            <div class="steps">
+                <div class="step"><strong>收到投诉通知</strong>：立即停止使用相关素材，删除所有相关内容</div>
+                <div class="step"><strong>保存证据</strong>：截图保存投诉内容和自己的使用授权证明</div>
+                <div class="step"><strong>联系平台客服</strong>：24小时内提交申诉材料</div>
+                <div class="step"><strong>寻求法律援助</strong>：如涉及金额较大，咨询专业律师</div>
+            </div>
+        </section>
+        
+        <section id="section11">
+            <h2>十一、数据分析与优化策略</h2>
+            
+            <h3>1. 转化漏斗分析</h3>
+            <div class="formula">
+                完整转化路径：曝光 → 点击 → 观看 → 注册 → 付费
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>转化节点</th>
+                        <th>行业基准</th>
+                        <th>优秀水平</th>
+                        <th>优化重点</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>曝光→点击率</strong></td>
+                        <td>2.5% - 4%</td>
+                        <td>6% - 8%</td>
+                        <td>封面图优化、标题吸引力</td>
+                    </tr>
+                    <tr>
+                        <td><strong>点击→完播率</strong></td>
+                        <td>35% - 50%</td>
+                        <td>65% - 80%</td>
+                        <td>前3秒钩子、节奏控制</td>
+                    </tr>
+                    <tr>
+                        <td><strong>观看→注册率</strong></td>
+                        <td>8% - 12%</td>
+                        <td>18% - 25%</td>
+                        <td>CTA设计、福利诱导</td>
+                    </tr>
+                    <tr>
+                        <td><strong>注册→付费率</strong></td>
+                        <td>15% - 25%</td>
+                        <td>35% - 45%</td>
+                        <td>新手引导、首单优惠</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="insight">
+                <h3>💡 数据洞察技巧</h3>
+                <p><strong>漏斗诊断法</strong>：找到转化率最低的环节，优先优化该节点</p>
+                <p><strong>同期群分析</strong>：对比不同时期用户的留存和付费表现</p>
+                <p><strong>渠道对比</strong>：识别高价值流量来源，加大投入</p>
+            </div>
+            
+            <h3>2. A/B测试方法</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>测试维度</th>
+                        <th>变量设置</th>
+                        <th>样本要求</th>
+                        <th>测试周期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>封面图测试</strong></td>
+                        <td>人物表情、色彩搭配、文字位置</td>
+                        <td>每组≥1000次曝光</td>
+                        <td>3-5天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>标题文案</strong></td>
+                        <td>情感诉求、悬念设置、长度控制</td>
+                        <td>每组≥500次点击</td>
+                        <td>2-3天</td>
+                    </tr>
+                    <tr>
+                        <td><strong>发布时间</strong></td>
+                        <td>早中晚不同时段</td>
+                        <td>每时段≥10条内容</td>
+                        <td>1周</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CTA按钮</strong></td>
+                        <td>颜色、文字、位置</td>
+                        <td>每组≥200次点击</td>
+                        <td>1-2天</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>3. 高转化文案模板</h3>
+            <div class="metric-card">
+                <h4>悬念型标题</h4>
+                <div class="metric-value">转化率: 12.3%</div>
+                <p>模板：她做了这件事，竟然让CEO跪下求婚？</p>
+            </div>
+            
+            <div class="metric-card">
+                <h4>对比型标题</h4>
+                <div class="metric-value">转化率: 10.8%</div>
+                <p>模板：同样是灰姑娘，为什么她能逆袭成功？</p>
+            </div>
+            
+            <div class="metric-card">
+                <h4>数字型标题</h4>
+                <div class="metric-value">转化率: 9.5%</div>
+                <p>模板：3分钟看完豪门恩怨，结局太震撼了！</p>
+            </div>
+            
+            <div class="metric-card">
+                <h4>情感型标题</h4>
+                <div class="metric-value">转化率: 11.2%</div>
+                <p>模板：看到这里我哭了，太心疼女主了...</p>
+            </div>
+        </section>
+        
+        <section id="section12">
+            <h2>十二、内容创作深度指导</h2>
+            
+            <div class="creative-tip">
+                <h3>🎯 核心理念：3秒定生死，15秒见分晓</h3>
+                <p>短剧推广视频的黄金时长：15-60秒，重点在前3秒抓住用户注意力</p>
+            </div>
+            
+            <h3>1. 剪辑技巧进阶</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>技巧类型</th>
+                        <th>具体操作</th>
+                        <th>效果说明</th>
+                        <th>使用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>快切转场</strong></td>
+                        <td>0.1秒快速切换镜头</td>
+                        <td>营造紧张感，提升节奏</td>
+                        <td>冲突高潮、情绪转折</td>
+                    </tr>
+                    <tr>
+                        <td><strong>定格特写</strong></td>
+                        <td>关键表情定格2-3秒</td>
+                        <td>强化情感冲击力</td>
+                        <td>震惊、愤怒、感动时刻</td>
+                    </tr>
+                    <tr>
+                        <td><strong>画中画</strong></td>
+                        <td>同时展示多个角度</td>
+                        <td>增加信息密度</td>
+                        <td>对比反差、多线并行</td>
+                    </tr>
+                    <tr>
+                        <td><strong>倒放回闪</strong></td>
+                        <td>关键动作倒放重播</td>
+                        <td>制造悬念和回味</td>
+                        <td>打脸、逆转、揭秘</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>2. 不同题材的高转化文案公式</h3>
+            
+            <div class="template-box">
+                <h4>💕 言情虐恋类</h4>
+                <p><strong>公式：</strong>身份对比 + 情感冲突 + 悬念结尾</p>
+                <p><strong>模板：</strong>"豪门千金爱上穷小子，却不知道他的真实身份是..."</p>
+                <p><strong>转化率：</strong>14.2%</p>
+            </div>
+            
+            <div class="template-box">
+                <h4>⚡ 爽文逆袭类</h4>
+                <p><strong>公式：</strong>被看不起 + 实力展现 + 打脸快感</p>
+                <p><strong>模板：</strong>"所有人都嘲笑他是废物，直到他亮出这个身份..."</p>
+                <p><strong>转化率：</strong>16.8%</p>
+            </div>
+            
+            <div class="template-box">
+                <h4>🔍 悬疑推理类</h4>
+                <p><strong>公式：</strong>异常现象 + 线索揭示 + 真相预告</p>
+                <p><strong>模板：</strong>"新婚夜丈夫消失，妻子发现了这个秘密..."</p>
+                <p><strong>转化率：</strong>12.5%</p>
+            </div>
+            
+            <div class="template-box">
+                <h4>👑 宫斗权谋类</h4>
+                <p><strong>公式：</strong>权力斗争 + 阴谋揭露 + 反转预告</p>
+                <p><strong>模板：</strong>"她以为自己赢了，却不知道真正的棋手是..."</p>
+                <p><strong>转化率：</strong>13.7%</p>
+            </div>
+            
+            <h3>3. 素材获取与原创度提升</h3>
+            <div class="technique">
+                <h4>🥇 一级渠道（最安全）</h4>
+                <p>• FrameFlash官方素材库：每日更新50+部短剧</p>
+                <p>• 平台合作方提供：已获得推广授权的内容</p>
+                <p>• 版权方直接授权：签署正式授权协议</p>
+            </div>
+            
+            <div class="technique">
+                <h4>🥈 二级渠道（需谨慎）</h4>
+                <p>• 创作者原创内容：需确认原创性和授权</p>
+                <p>• 付费素材网站：Shutterstock、Getty Images等</p>
+                <p>• 免费素材平台：Pixabay、Unsplash（需确认商用许可）</p>
+            </div>
+            
+            <h3>4. 原创度提升方案</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>提升方法</th>
+                        <th>操作难度</th>
+                        <th>原创度提升</th>
+                        <th>时间成本</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>添加个人解说</td>
+                        <td>简单</td>
+                        <td>+30%</td>
+                        <td>10分钟</td>
+                    </tr>
+                    <tr>
+                        <td>重新配音配乐</td>
+                        <td>中等</td>
+                        <td>+50%</td>
+                        <td>30分钟</td>
+                    </tr>
+                    <tr>
+                        <td>画面重新剪辑</td>
+                        <td>中等</td>
+                        <td>+60%</td>
+                        <td>45分钟</td>
+                    </tr>
+                    <tr>
+                        <td>拍摄反应视频</td>
+                        <td>困难</td>
+                        <td>+80%</td>
+                        <td>2小时</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <button class="btn-print" onclick="window.print()">打印本手册</button>
+        
+        <footer>
+            <p>© 2025 FrameFlash分销系统 | 文档版本 v2.5 | 更新于2025年9月</p>
+            <p>如有疑问，请联系：admin@frameflash.com</p>
+        </footer>
+    </div>
+
+    <script>
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
